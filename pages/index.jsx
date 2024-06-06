@@ -13,6 +13,7 @@ import {
   Card,
   RingProgress,
 } from "@mantine/core";
+import ImageFallback from "../components/ImageFallback";
 
 const calcStateOfCourse = (tasks_ready, tasks) => {
   if (!tasks_ready || !tasks) return 0;
@@ -32,7 +33,10 @@ export default function Home({ courses }) {
       </Head>
       <Container>
         <Space h="xl" />
-        <div className={styles.title} style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}>
+        <div
+          className={styles.title}
+          style={{ color: "#036459", fontSize: "24px", fontWeight: "600" }}
+        >
           Мои курсы
         </div>
         <Space h="lg" />
@@ -42,78 +46,79 @@ export default function Home({ courses }) {
               <Link key={course.id} passHref href={`/courses/${course.id}`}>
                 <Card
                   className={styles.mobile__card}
-                  shadow='sm'
-                  padding='lg'
-                  radius='md'
+                  shadow="sm"
+                  padding="lg"
+                  radius="md"
                   withBorder
                   style={{
-                    paddingBottom: '6px',
-                    cursor: 'pointer',
-                    border: '2px solid #33CFBD',
-                    boxShadow: '0px 2px 20px #BBBBBB'
+                    paddingBottom: "6px",
+                    cursor: "pointer",
+                    border: "2px solid #33CFBD",
+                    boxShadow: "0px 2px 20px #BBBBBB",
                   }}
                 >
                   <div
                     className={styles.title__card}
                     style={{
-                      fontSize: '15px',
-                      fontWeight: '600',
-                      color: '#036459'
+                      fontSize: "15px",
+                      fontWeight: "600",
+                      color: "#036459",
                     }}
                   >
                     {course.name}
                   </div>
-                  <div className='d-flex align-items-center p-2'>
-                    <Image
+                  <div className="d-flex align-items-center p-2">
+                    <ImageFallback
                       className={styles.image__card}
                       radius={100}
-                      src={'/' + course.image}
+                      src={"/" + course.image}
                       height={130}
                       width={130}
-                      alt='Школа талантов'
+                      fallbackSrc={"/favicon.ico"}
+                      alt="Школа талантов"
                     />
                     <div
                       className={styles.progress__card}
-                      style={{ paddingLeft: '20px' }}
+                      style={{ paddingLeft: "20px" }}
                     >
                       <RingProgress
                         size={70}
                         thickness={6}
                         label={
-                          <Text size='xs' align='center'>
+                          <Text size="xs" align="center">
                             {calcStateOfCourse(tasks_ready, tasks)}%
                           </Text>
                         }
                         sections={[
                           {
                             value: calcStateOfCourse(tasks_ready, tasks),
-                            color: '#1FBEAC'
-                          }
+                            color: "#1FBEAC",
+                          },
                         ]}
                       />
                       <div className={styles.progress__text}>
                         <div
                           style={{
-                            fontSize: '14px',
-                            color: '#036459',
-                            paddingLeft: '10px'
+                            fontSize: "14px",
+                            color: "#036459",
+                            paddingLeft: "10px",
                           }}
                         >
-                          <span style={{ color: '#1FBEAC' }}>
+                          <span style={{ color: "#1FBEAC" }}>
                             {tasks_ready}
-                          </span>{' '}
+                          </span>{" "}
                           выполнено
                         </div>
                         <div
                           style={{
-                            fontSize: '14px',
-                            color: '#036459',
-                            paddingLeft: '10px'
+                            fontSize: "14px",
+                            color: "#036459",
+                            paddingLeft: "10px",
                           }}
                         >
-                          <span style={{ color: '#1FBEAC' }}>
+                          <span style={{ color: "#1FBEAC" }}>
                             {tasks - tasks_ready}
-                          </span>{' '}
+                          </span>{" "}
                           осталось
                         </div>
                       </div>
@@ -155,5 +160,5 @@ export const getServerSideProps = withIronSessionSsr(
       },
     };
   },
-  sessionOptions
+  sessionOptions,
 );

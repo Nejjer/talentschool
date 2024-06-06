@@ -20,6 +20,11 @@ import {
   Center,
 } from "@mantine/core";
 import { Upload, X, Check } from "tabler-icons-react";
+import dynamic from "next/dynamic";
+
+const RichTextEditor = dynamic(() => import("@mantine/rte"), {
+  ssr: false,
+});
 
 export default function Task({ task, task_status, messages }) {
   const router = useRouter();
@@ -38,8 +43,8 @@ export default function Task({ task, task_status, messages }) {
       .then(() => {
         router.replace(router.asPath);
       })
-      .catch(() => { })
-      .finally(() => { });
+      .catch(() => {})
+      .finally(() => {});
   };
 
   const getIconColor = (status, theme) => {
@@ -95,8 +100,8 @@ export default function Task({ task, task_status, messages }) {
         setFiles([]);
         setChat([...chat, res.data]);
       })
-      .catch(() => { })
-      .finally(() => { });
+      .catch(() => {})
+      .finally(() => {});
   };
   return (
     <>
@@ -113,6 +118,7 @@ export default function Task({ task, task_status, messages }) {
           >
             {task?.name}
           </div>
+          <RichTextEditor readOnly value={task?.description} />
           {task_status !== "empty" ? (
             <>
               <Space h="lg" />
@@ -140,10 +146,11 @@ export default function Task({ task, task_status, messages }) {
                     .map((message) => {
                       return (
                         <div
-                          className={`${styles.message} ${message?.answer_id
-                            ? styles.interlocutor
-                            : styles.you
-                            }`}
+                          className={`${styles.message} ${
+                            message?.answer_id
+                              ? styles.interlocutor
+                              : styles.you
+                          }`}
                           key={message?.id}
                         >
                           {message?.files?.at(0) ? (
@@ -184,7 +191,10 @@ export default function Task({ task, task_status, messages }) {
                       </Text>
                     )}
 
-                    <Input placeholder="Введите сообщение" name="user-message" />
+                    <Input
+                      placeholder="Введите сообщение"
+                      name="user-message"
+                    />
                     <Dropzone
                       onDrop={(files) => {
                         setFiles(files);
@@ -284,5 +294,5 @@ export const getServerSideProps = withIronSessionSsr(
       },
     };
   },
-  sessionOptions
+  sessionOptions,
 );
