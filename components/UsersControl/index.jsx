@@ -112,7 +112,7 @@ const UsersControl = () => {
                       </td>
                       <td>{user.email}</td>
                       <td>{user.password}</td>
-                      <td colspan='4'>
+                      <td colSpan='4'>
                         <Button
                           variant='subtle'
                           color='dark'
